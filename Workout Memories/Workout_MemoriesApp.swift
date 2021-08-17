@@ -11,7 +11,7 @@ import SwiftUI
 struct Workout_MemoriesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MemoriesListView()
         }
     }
 }

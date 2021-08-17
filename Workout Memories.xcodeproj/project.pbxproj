@@ -8,17 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		6E70AF9226BDD8050068EDB7 /* Workout_MemoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AF9126BDD8050068EDB7 /* Workout_MemoriesApp.swift */; };
-		6E70AF9426BDD8050068EDB7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AF9326BDD8050068EDB7 /* ContentView.swift */; };
+		6E70AF9426BDD8050068EDB7 /* MemoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AF9326BDD8050068EDB7 /* MemoriesListView.swift */; };
 		6E70AF9626BDD8060068EDB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E70AF9526BDD8060068EDB7 /* Assets.xcassets */; };
 		6E70AF9926BDD8060068EDB7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E70AF9826BDD8060068EDB7 /* Preview Assets.xcassets */; };
+		6E70AFA026BDDC3A0068EDB7 /* MemoryCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AF9F26BDDC3A0068EDB7 /* MemoryCreationView.swift */; };
+		6E70AFA226BDDFB50068EDB7 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AFA126BDDFB50068EDB7 /* WorkoutListView.swift */; };
+		6E70AFA626BDEBCA0068EDB7 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AFA526BDEBCA0068EDB7 /* HealthManager.swift */; };
+		6E70AFA826BDEC940068EDB7 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E70AFA726BDEC940068EDB7 /* Workouts.swift */; };
+		6E70AFAC26BDF1000068EDB7 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E70AFAB26BDF1000068EDB7 /* HealthKit.framework */; };
+		6EDA273226BF447D00EACC86 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 6EDA273126BF447D00EACC86 /* Collections */; };
+		6EDA273426BF447D00EACC86 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 6EDA273326BF447D00EACC86 /* OrderedCollections */; };
+		6EDA273626BF452D00EACC86 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA273526BF452D00EACC86 /* Memory.swift */; };
+		6EDA273826BF5B0C00EACC86 /* MemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA273726BF5B0C00EACC86 /* MemoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6E70AF8E26BDD8050068EDB7 /* Workout Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Memories.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E70AF9126BDD8050068EDB7 /* Workout_MemoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout_MemoriesApp.swift; sourceTree = "<group>"; };
-		6E70AF9326BDD8050068EDB7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6E70AF9326BDD8050068EDB7 /* MemoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesListView.swift; sourceTree = "<group>"; };
 		6E70AF9526BDD8060068EDB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E70AF9826BDD8060068EDB7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6E70AF9F26BDDC3A0068EDB7 /* MemoryCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCreationView.swift; sourceTree = "<group>"; };
+		6E70AFA126BDDFB50068EDB7 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
+		6E70AFA326BDEA6A0068EDB7 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
+		6E70AFA526BDEBCA0068EDB7 /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
+		6E70AFA726BDEC940068EDB7 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
+		6E70AFA926BDF1000068EDB7 /* Workout Memories.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Workout Memories.entitlements"; sourceTree = "<group>"; };
+		6E70AFAB26BDF1000068EDB7 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		6EDA273526BF452D00EACC86 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		6EDA273726BF5B0C00EACC86 /* MemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EDA273226BF447D00EACC86 /* Collections in Frameworks */,
+				6E70AFAC26BDF1000068EDB7 /* HealthKit.framework in Frameworks */,
+				6EDA273426BF447D00EACC86 /* OrderedCollections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,6 +58,7 @@
 			children = (
 				6E70AF9026BDD8050068EDB7 /* Workout Memories */,
 				6E70AF8F26BDD8050068EDB7 /* Products */,
+				6E70AFAA26BDF1000068EDB7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,9 +73,17 @@
 		6E70AF9026BDD8050068EDB7 /* Workout Memories */ = {
 			isa = PBXGroup;
 			children = (
+				6E70AFA926BDF1000068EDB7 /* Workout Memories.entitlements */,
 				6E70AF9126BDD8050068EDB7 /* Workout_MemoriesApp.swift */,
-				6E70AF9326BDD8050068EDB7 /* ContentView.swift */,
+				6EDA273726BF5B0C00EACC86 /* MemoryView.swift */,
+				6E70AF9326BDD8050068EDB7 /* MemoriesListView.swift */,
+				6E70AF9F26BDDC3A0068EDB7 /* MemoryCreationView.swift */,
+				6E70AFA126BDDFB50068EDB7 /* WorkoutListView.swift */,
+				6E70AFA526BDEBCA0068EDB7 /* HealthManager.swift */,
+				6E70AFA726BDEC940068EDB7 /* Workouts.swift */,
+				6EDA273526BF452D00EACC86 /* Memory.swift */,
 				6E70AF9526BDD8060068EDB7 /* Assets.xcassets */,
+				6E70AFA326BDEA6A0068EDB7 /* info.plist */,
 				6E70AF9726BDD8060068EDB7 /* Preview Content */,
 			);
 			path = "Workout Memories";
@@ -65,6 +95,14 @@
 				6E70AF9826BDD8060068EDB7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6E70AFAA26BDF1000068EDB7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E70AFAB26BDF1000068EDB7 /* HealthKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +121,10 @@
 			dependencies = (
 			);
 			name = "Workout Memories";
+			packageProductDependencies = (
+				6EDA273126BF447D00EACC86 /* Collections */,
+				6EDA273326BF447D00EACC86 /* OrderedCollections */,
+			);
 			productName = "Workout Memories";
 			productReference = 6E70AF8E26BDD8050068EDB7 /* Workout Memories.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +153,9 @@
 				Base,
 			);
 			mainGroup = 6E70AF8526BDD8050068EDB7;
+			packageReferences = (
+				6EDA273026BF447D00EACC86 /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			productRefGroup = 6E70AF8F26BDD8050068EDB7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +182,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E70AF9426BDD8050068EDB7 /* ContentView.swift in Sources */,
+				6E70AF9426BDD8050068EDB7 /* MemoriesListView.swift in Sources */,
 				6E70AF9226BDD8050068EDB7 /* Workout_MemoriesApp.swift in Sources */,
+				6E70AFA226BDDFB50068EDB7 /* WorkoutListView.swift in Sources */,
+				6EDA273626BF452D00EACC86 /* Memory.swift in Sources */,
+				6E70AFA026BDDC3A0068EDB7 /* MemoryCreationView.swift in Sources */,
+				6E70AFA626BDEBCA0068EDB7 /* HealthManager.swift in Sources */,
+				6E70AFA826BDEC940068EDB7 /* Workouts.swift in Sources */,
+				6EDA273826BF5B0C00EACC86 /* MemoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,28 +317,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Workout Memories/Workout Memories.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Workout Memories/Preview Content\"";
 				DEVELOPMENT_TEAM = K36HYHZA7X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Workout Memories/info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lonniegerol.workoutmemories.Workout-Memories";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -296,28 +349,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Workout Memories/Workout Memories.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Workout Memories/Preview Content\"";
 				DEVELOPMENT_TEAM = K36HYHZA7X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Workout Memories/info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lonniegerol.workoutmemories.Workout-Memories";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -343,6 +398,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6EDA273026BF447D00EACC86 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6EDA273126BF447D00EACC86 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EDA273026BF447D00EACC86 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		6EDA273326BF447D00EACC86 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EDA273026BF447D00EACC86 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6E70AF8626BDD8050068EDB7 /* Project object */;
 }
