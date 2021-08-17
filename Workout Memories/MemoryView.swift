@@ -13,12 +13,37 @@ struct MemoryView: View {
     @State var locations:  [UUID:[CLLocationCoordinate2D]] = [:]
     @ObservedObject private var workoutManager = WorkoutManager()
 
+    private func calculateMemoryDistance() -> String {
+        guard let workouts = memory?.workouts else {
+            return Style.distanceString(value: 0)
+        }
+
+        let totalDistance = workouts.reduce(0) {
+            $0 + ($1.totalDistance?.doubleValue(for: .mile()) ?? 0)
+        }
+
+        return Style.distanceString(value: totalDistance)
+    }
+
+    private func calculateMemoryDuration() -> String {
+        guard let workouts = memory?.workouts else {
+            return Style.distanceString(value: 0)
+        }
+
+        let totalDuration = workouts.reduce(0) {
+            $0 + ($1.duration)
+        }
+
+        return Style.timeDurationString(totalDuration)
+    }
+
     var body: some View {
         VStack {
             MapView(lineCoordinates: locations)
             VStack(alignment: .leading) {
                 Text(memory?.description ?? "Sample Description")
-                Text("Total Distance traveled: 69 miles")
+                Text("Total Distance Traveled: \(calculateMemoryDistance())")
+                Text("Total Time: \(calculateMemoryDuration())")
                 List {
                     if let memory = memory {
                         ForEach(Array(memory.workouts), id: \.uuid) { workout in

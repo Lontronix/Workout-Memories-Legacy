@@ -25,10 +25,10 @@ struct WorkoutCell<Preview: View>: View {
                 Text(startDate, format: .dateTime)
                 Text("\(workoutType.emoji()) \(workoutType.rawValue)")
                     .font(.caption)
-                Text(startDate..<endDate, format: .components(style: .abbreviated, fields: [.hour, .minute, .second]))
+                Text(Style.timeDurationString(startDate..<endDate))
                     .font(.caption)
 
-                Text("\(miles.formatted(.number.precision(.significantDigits(2)))) miles")
+                Text(Style.distanceString(value: miles))
                     .font(.caption)
             }
             Spacer()
