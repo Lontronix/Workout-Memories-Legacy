@@ -10,20 +10,23 @@ import MapKit
 
 struct MemoryView: View {
     @State var memory: Memory?
-    @State private var origin = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.333705,
-                                                                          longitude: -122.0105905),
-                                           span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-
+    @State var locations:  [UUID:[CLLocationCoordinate2D]] = [:]
+    
     var body: some View {
         VStack {
-            Map(coordinateRegion: $origin)
+            MapView(lineCoordinates: locations)
             VStack(alignment: .leading) {
                 Text(memory?.description ?? "Sample Description")
                 Text("Total Distance traveled: 69 miles")
                 List {
                     if let memory = memory {
                         ForEach(Array(memory.workouts), id: \.uuid) { workout in
-                            Text("I am a workout")
+                            WorkoutCell(
+                                startDate: workout.startDate,
+                                endDate: workout.endDate,
+                                miles: workout.totalDistance?.doubleValue(for: .mile()) ?? 0,
+                                isSelected: false,
+                                workoutType: workout.workoutActivityType.supportedWorkout())
                         }
 
                     } else {
@@ -36,7 +39,7 @@ struct MemoryView: View {
             }.padding()
         }.onAppear {
             Task {
-                await WorkoutManager.fetchRouteData(for: Array(memory!.workouts))
+                self.locations = await WorkoutManager.fetchRouteData(for: Array(memory!.workouts))
             }
         }
     }

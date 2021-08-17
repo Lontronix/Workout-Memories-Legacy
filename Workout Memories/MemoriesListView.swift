@@ -58,6 +58,13 @@ struct MemoriesListView: View {
         }.popover(isPresented: $presentingModal) {
             MemoryCreationView(memories: $memories)
         }
+        #if DEBUG
+        .onAppear {
+            Memory.createSampleMemory { memory in
+                self.memories.insert(memory)
+            }
+        }
+        #endif
     }
 }
 

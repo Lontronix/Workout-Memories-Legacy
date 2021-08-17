@@ -95,36 +95,56 @@ class WorkoutManager: ObservableObject {
     //        }
     //    }
 
-    static func fetchRouteData(for workouts: [HKWorkout]) async {
-        let runningObjectQuery = HKQuery.predicateForObjects(from: workouts[0])
+    static func fetchRouteData(for workouts: [HKWorkout]) async -> [UUID:[CLLocationCoordinate2D]] {
+        var routes: [UUID:[CLLocationCoordinate2D]] = [:]
         do {
-            let (_ , samples, _ , _) = try await HKWorkoutRouteQuery.anchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: runningObjectQuery, anchor: nil, limit: HKObjectQueryNoLimit)
+            try await withThrowingTaskGroup(of: (uuid: UUID, coordinates: [CLLocationCoordinate2D]).self) { group in
+                for workout in workouts {
 
-            guard let samples = samples else {
-                return
-            }
+                    group.addTask {
 
-            guard samples.count > 0 else {
-                return
-            }
+                        let runningObjectQuery = HKQuery.predicateForObjects(from: workout)
+                        do {
+                            let (_ , samples, _ , _) = try await HKWorkoutRouteQuery.anchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: runningObjectQuery, anchor: nil, limit: HKObjectQueryNoLimit)
 
-            // second async call
-            do {
-                let (_ , locationsOrNil) = try await HKWorkoutRouteQuery.workoutRouteQuery(route: samples[0] as! HKWorkoutRoute)
-                // This block may be called multiple times.
-                guard let locations = locationsOrNil else {
-                    fatalError("*** Invalid State: This can only fail if there was an error. ***")
+                            guard let samples = samples else {
+                                fatalError("No samples")
+                            }
+
+                            //                        guard samples.count > 0 else {
+                            //                            return
+                            //                        }
+
+                            // second async call
+                            do {
+                                let (_ , locationsOrNil) = try await HKWorkoutRouteQuery.workoutRouteQuery(route: samples[0] as! HKWorkoutRoute)
+                                // This block may be called multiple times.
+                                guard let locations = locationsOrNil else {
+                                    fatalError("*** Invalid State: This can only fail if there was an error. ***")
+                                }
+                                return (workout.uuid,locations.map {$0.coordinate})
+                            } catch {
+                                fatalError("The second query failed")
+                            }
+
+                        } catch {
+                            // Handle any errors here.
+                            fatalError("The initial query failed.")
+                        }
+                    }
+
+                    for try await results in group {
+                        routes[results.uuid] = results.coordinates
+                    }
                 }
-                print(locations)
-            } catch {
-                fatalError("The second query failed")
             }
 
         } catch {
-            // Handle any errors here.
-            fatalError("The initial query failed.")
+            fatalError("Something went wrong")
         }
 
+
+        return routes
     }
 }
 
@@ -160,7 +180,6 @@ extension HKWorkoutRouteQuery {
                     return continuation.resume(with: .failure(error))
                 }
 
-                
                 guard done else {
                     assert(locationsOrNil != nil)
                     return allLocations.append(contentsOf: locationsOrNil!)
