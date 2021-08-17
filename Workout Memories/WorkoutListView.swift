@@ -47,6 +47,31 @@ enum LoadState<Value> {
     case failed(Error)
 }
 
+struct WorkoutMapPreview: View {
+    @ObservedObject var workoutManager: WorkoutManager
+    @State var workout: HKWorkout
+
+    var body: some View {
+        Group {
+            switch workoutManager.snapshot(for: workout) {
+            case .loading:
+                ProgressView()
+            case .idle:
+                Color(uiColor: .secondarySystemBackground)
+            case .loaded(let snapshot):
+                Image(uiImage: snapshot)
+                    .resizable()
+                    .scaledToFill()
+            case .failed(let error):
+                Text("\(error.localizedDescription)")
+                    .font(.caption)
+            }
+        }
+        .frame(width: 100, height: 75)
+        .cornerRadius(8)
+    }
+}
+
 struct WorkoutListView: View {
     @State private var selection: SupportedWorkout = .outdoorWalk
     @State private var selectedWorkouts = Set<HKWorkout>()
@@ -63,23 +88,7 @@ struct WorkoutListView: View {
             isSelected: selectedWorkouts.contains(workout),
             workoutType:  workout.workoutActivityType.supportedWorkout()
         ) {
-            Group {
-                switch workoutManager.snapshot(for: workout) {
-                case .loading:
-                    ProgressView()
-                case .idle:
-                    Color(uiColor: .secondarySystemBackground)
-                case .loaded(let snapshot):
-                    Image(uiImage: snapshot)
-                        .resizable()
-                        .scaledToFill()
-                case .failed(let error):
-                    Text("\(error.localizedDescription)")
-                        .font(.caption)
-                }
-            }
-            .frame(width: 100, height: 75)
-            .cornerRadius(10)
+            WorkoutMapPreview(workoutManager: workoutManager, workout: workout)
         }
     }
 

@@ -11,7 +11,8 @@ import MapKit
 struct MemoryView: View {
     @State var memory: Memory?
     @State var locations:  [UUID:[CLLocationCoordinate2D]] = [:]
-    
+    @ObservedObject private var workoutManager = WorkoutManager()
+
     var body: some View {
         VStack {
             MapView(lineCoordinates: locations)
@@ -27,7 +28,7 @@ struct MemoryView: View {
                                 miles: workout.totalDistance?.doubleValue(for: .mile()) ?? 0,
                                 isSelected: false,
                                 workoutType: workout.workoutActivityType.supportedWorkout()) {
-                                    Text("Foo")
+                                    WorkoutMapPreview(workoutManager: workoutManager, workout: workout)
                                 }
                         }
 
