@@ -59,6 +59,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E013EF426CB6795008D8CF7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6E70AF9326BDD8050068EDB7 /* MemoriesListView.swift */,
+				6EDA273726BF5B0C00EACC86 /* MemoryView.swift */,
+				6E70AF9F26BDDC3A0068EDB7 /* MemoryCreationView.swift */,
+				6E70AFA126BDDFB50068EDB7 /* WorkoutListView.swift */,
+				6EE9908F26C369C70076D4F1 /* MapView.swift */,
+				6E22868A26C4C614007F2F1E /* MapSnapshotter.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6E013EF526CB67C2008D8CF7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6EDA273526BF452D00EACC86 /* Memory.swift */,
+				6E70AFA526BDEBCA0068EDB7 /* HealthManager.swift */,
+				6E70AFA726BDEC940068EDB7 /* Workouts.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		6E70AF8526BDD8050068EDB7 = {
 			isa = PBXGroup;
 			children = (
@@ -81,15 +104,8 @@
 			children = (
 				6E70AFA926BDF1000068EDB7 /* Workout Memories.entitlements */,
 				6E70AF9126BDD8050068EDB7 /* Workout_MemoriesApp.swift */,
-				6EDA273726BF5B0C00EACC86 /* MemoryView.swift */,
-				6E70AF9326BDD8050068EDB7 /* MemoriesListView.swift */,
-				6E70AF9F26BDDC3A0068EDB7 /* MemoryCreationView.swift */,
-				6E22868A26C4C614007F2F1E /* MapSnapshotter.swift */,
-				6E70AFA126BDDFB50068EDB7 /* WorkoutListView.swift */,
-				6E70AFA526BDEBCA0068EDB7 /* HealthManager.swift */,
-				6E70AFA726BDEC940068EDB7 /* Workouts.swift */,
-				6EE9908F26C369C70076D4F1 /* MapView.swift */,
-				6EDA273526BF452D00EACC86 /* Memory.swift */,
+				6E013EF526CB67C2008D8CF7 /* Model */,
+				6E013EF426CB6795008D8CF7 /* Views */,
 				6E013EF226CB5CDA008D8CF7 /* extensions.swift */,
 				6E70AF9526BDD8060068EDB7 /* Assets.xcassets */,
 				6E70AFA326BDEA6A0068EDB7 /* info.plist */,
