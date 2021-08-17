@@ -85,8 +85,8 @@ class Coordinator: NSObject, MKMapViewDelegate {
 
         if let first = view.overlays.first {
             let rect = view.overlays.reduce(first.boundingMapRect, {$0.union($1.boundingMapRect)})
-             view.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 50.0, right: 50.0), animated: false)
-         }
+            view.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 50.0, right: 50.0), animated: false)
+        }
 
         currentCoordinates = coordinates
     }

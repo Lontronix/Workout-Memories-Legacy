@@ -28,7 +28,7 @@ struct MemoryCreationView : View {
                 description: memoryDescription,
                 workouts: selectedWorkouts
             )
-)
+            )
         }
         dismiss()
     }
@@ -40,15 +40,17 @@ struct MemoryCreationView : View {
             miles: workout.totalDistance?.doubleValue(for: .mile()) ?? 0,
             isSelected: false,
             workoutType:  workout.workoutActivityType.supportedWorkout()
-        )
-            .swipeActions(content: {
-                Button(action: {
+        ) {
+            Text("Foo")
+        }
+        .swipeActions(content: {
+            Button(action: {
 
-                }) {
-                    Text("Delete")
-                        .foregroundColor(.red)
-                }
-            })
+            }) {
+                Text("Delete")
+                    .foregroundColor(.red)
+            }
+        })
     }
 
     var body: some View {

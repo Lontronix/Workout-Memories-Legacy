@@ -7,19 +7,24 @@
 
 import SwiftUI
 import HealthKit
+import MapKit
 
-struct WorkoutCell: View {
+struct WorkoutCell<Preview: View>: View {
     var startDate: Date
     var endDate: Date
     var miles: Double
     var isSelected: Bool
     var workoutType: SupportedWorkout
+    var coordinates: [CLLocationCoordinate2D]?
+    @ViewBuilder var preview: Preview
 
     var body: some View {
         HStack {
-            Text(workoutType.emoji())
+            preview
             VStack(alignment: .leading) {
                 Text(startDate, format: .dateTime)
+                Text("\(workoutType.emoji()) \(workoutType.rawValue)")
+                    .font(.caption)
                 Text(startDate..<endDate, format: .components(style: .abbreviated, fields: [.hour, .minute, .second]))
                     .font(.caption)
 
@@ -33,6 +38,13 @@ struct WorkoutCell: View {
             }
         }
     }
+}
+
+enum LoadState<Value> {
+    case idle
+    case loading
+    case loaded(Value)
+    case failed(Error)
 }
 
 struct WorkoutListView: View {
@@ -50,7 +62,25 @@ struct WorkoutListView: View {
             miles: workout.totalDistance?.doubleValue(for: .mile()) ?? 0,
             isSelected: selectedWorkouts.contains(workout),
             workoutType:  workout.workoutActivityType.supportedWorkout()
-        )
+        ) {
+            Group {
+                switch workoutManager.snapshot(for: workout) {
+                case .loading:
+                    ProgressView()
+                case .idle:
+                    Color(uiColor: .secondarySystemBackground)
+                case .loaded(let snapshot):
+                    Image(uiImage: snapshot)
+                        .resizable()
+                        .scaledToFill()
+                case .failed(let error):
+                    Text("\(error.localizedDescription)")
+                        .font(.caption)
+                }
+            }
+            .frame(width: 100, height: 75)
+            .cornerRadius(10)
+        }
     }
 
     var body: some View {
@@ -111,10 +141,16 @@ struct WorkoutListView: View {
 struct WorkoutListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutCell(startDate: .now, endDate: .now + 1000, miles: 2, isSelected: true, workoutType: .outdoorRun)
-            WorkoutCell(startDate: .now, endDate: .now + 100, miles: 0.6, isSelected: false, workoutType: .outdoorRun)
-            WorkoutCell(startDate: .now, endDate: .now + 100, miles: 0.6, isSelected: false, workoutType: .outdoorRun)
-                .preferredColorScheme(.dark)
+            WorkoutCell(startDate: .now, endDate: .now + 1000, miles: 2, isSelected: true, workoutType: .outdoorRun) {
+                Rectangle()
+            }
+            WorkoutCell(startDate: .now, endDate: .now + 100, miles: 0.6, isSelected: false, workoutType: .outdoorRun) {
+                Rectangle()
+            }
+            WorkoutCell(startDate: .now, endDate: .now + 100, miles: 0.6, isSelected: false, workoutType: .outdoorRun) {
+                Rectangle()
+            }
+            .preferredColorScheme(.dark)
         }
         .padding()
     }

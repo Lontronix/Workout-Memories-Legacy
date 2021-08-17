@@ -26,7 +26,9 @@ struct MemoryView: View {
                                 endDate: workout.endDate,
                                 miles: workout.totalDistance?.doubleValue(for: .mile()) ?? 0,
                                 isSelected: false,
-                                workoutType: workout.workoutActivityType.supportedWorkout())
+                                workoutType: workout.workoutActivityType.supportedWorkout()) {
+                                    Text("Foo")
+                                }
                         }
 
                     } else {

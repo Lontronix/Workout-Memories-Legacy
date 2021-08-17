@@ -8,6 +8,7 @@
 import Foundation
 import HealthKit
 import CoreLocation
+import UIKit
 
 enum SupportedWorkout: String, CaseIterable, Identifiable {
     var id: Self { self }
@@ -56,8 +57,10 @@ extension HKWorkoutActivityType {
     }
 }
 
-class WorkoutManager: ObservableObject {
+@MainActor class WorkoutManager: ObservableObject {
     @Published var workouts: [SupportedWorkout : [HKWorkout]] = [:]
+    @Published var snapshots = [HKWorkout: LoadState<UIImage>]()
+    // @Published var routeData = [UUID: LoadState<[CLLocationCoordinate2D]>]()
 
     init() {
         for workoutType in SupportedWorkout.allCases {
@@ -67,6 +70,26 @@ class WorkoutManager: ObservableObject {
                 }
             })
         }
+    }
+
+    func snapshot(for workout: HKWorkout) -> LoadState<UIImage> {
+        if let snapshot = snapshots[workout] {
+            return snapshot
+        }
+        snapshots[workout] = .loading
+        Task {
+            let routeData = await WorkoutManager.fetchRouteData(for: [workout])
+            do {
+                let image = try await MapSnapshotter.generateSnapshot(size: CGSize(width: 100, height: 75), coordinates: routeData[workout.uuid] ?? [])
+                self.snapshots[workout] = .loaded(image)
+                // load the route
+                // generate the snapshot image
+                // save it in `snapshots`
+            } catch {
+                self.snapshots[workout] = .failed(error)
+            }
+        }
+        return .loading
     }
 
     func fetchWorkouts(ofType type: SupportedWorkout, completion: @escaping (([HKWorkout]) -> Void)) {
@@ -107,26 +130,14 @@ class WorkoutManager: ObservableObject {
                         do {
                             let (_ , samples, _ , _) = try await HKWorkoutRouteQuery.anchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: runningObjectQuery, anchor: nil, limit: HKObjectQueryNoLimit)
 
-                            guard let samples = samples else {
-                                fatalError("No samples")
+                            guard samples.count > 0 else {
+                                return (workout.uuid, [])
                             }
-
-                            //                        guard samples.count > 0 else {
-                            //                            return
-                            //                        }
 
                             // second async call
-                            do {
-                                let (_ , locationsOrNil) = try await HKWorkoutRouteQuery.workoutRouteQuery(route: samples[0] as! HKWorkoutRoute)
-                                // This block may be called multiple times.
-                                guard let locations = locationsOrNil else {
-                                    fatalError("*** Invalid State: This can only fail if there was an error. ***")
-                                }
-                                return (workout.uuid,locations.map {$0.coordinate})
-                            } catch {
-                                fatalError("The second query failed")
-                            }
-
+                            let (_ , locations) = try await HKWorkoutRouteQuery.workoutRouteQuery(route: samples[0] as! HKWorkoutRoute)
+                            // This block may be called multiple times.
+                            return (workout.uuid,locations.map {$0.coordinate})
                         } catch {
                             // Handle any errors here.
                             fatalError("The initial query failed.")
@@ -150,7 +161,7 @@ class WorkoutManager: ObservableObject {
 
 // This is necessary because HealthKit doesn't have async calls
 extension HKWorkoutRouteQuery {
-    static func anchoredObjectQuery(type: HKSampleType, predicate: NSPredicate?, anchor: HKQueryAnchor?, limit: Int) async throws -> (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?) {
+    static func anchoredObjectQuery(type: HKSampleType, predicate: NSPredicate?, anchor: HKQueryAnchor?, limit: Int) async throws -> (HKAnchoredObjectQuery, [HKSample], [HKDeletedObject], HKQueryAnchor?) {
 
         return try await withCheckedThrowingContinuation { continuation in
             let query = HKAnchoredObjectQuery(type: type, predicate: predicate, anchor: anchor, limit: limit) { (query, samples, deletedObjects, anchor, error) in
@@ -158,7 +169,7 @@ extension HKWorkoutRouteQuery {
                     return continuation.resume(with: .failure(error))
                 }
 
-                return continuation.resume(with: .success((query, samples, deletedObjects, anchor)))
+                return continuation.resume(with: .success((query, samples ?? [], deletedObjects ?? [], anchor)))
             }
             Task {
                 await withTaskCancellationHandler(handler: {
@@ -170,7 +181,7 @@ extension HKWorkoutRouteQuery {
         }
     }
 
-    static func workoutRouteQuery(route workoutRoute: HKWorkoutRoute) async throws -> (HKWorkoutRouteQuery, [CLLocation]?) {
+    static func workoutRouteQuery(route workoutRoute: HKWorkoutRoute) async throws -> (HKWorkoutRouteQuery, [CLLocation]) {
         return try await withCheckedThrowingContinuation { continuation in
             var allLocations = [CLLocation]()
             let query = HKWorkoutRouteQuery(route: workoutRoute) { (query, locationsOrNil, done, errorOrNil) in

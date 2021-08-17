@@ -30,7 +30,7 @@ struct Memory: Hashable, Identifiable {
             }
 
             let memory = Memory(name: "Sample Memory",
-                          description: "This is a sample description of a memory",
+                                description: "This is a sample description of a memory",
                                 workouts: Set(samples! as! [HKWorkout]))
             completionHandler(memory)
         }
