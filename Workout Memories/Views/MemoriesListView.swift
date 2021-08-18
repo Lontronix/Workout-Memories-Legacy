@@ -8,18 +8,24 @@
 import SwiftUI
 
 struct MemoriesListView: View {
-    @State var presentingModal = false
-    @State var memories = Set<Memory>()
+    @Environment(\.managedObjectContext) private var managedObjectContext
+    @FetchRequest(
+        entity: Memory.entity(),
+        sortDescriptors: [],
+        predicate: nil,
+        animation: nil
+    ) private var memories: FetchedResults<Memory>
+    @State private var presentingModal = false
 
     func cell(for memory: Memory) -> some View {
         NavigationLink(destination: {
             MemoryView(memory: memory)
-                .navigationTitle(memory.name)
+                .navigationTitle(memory.memoryName ?? "")
                 .navigationBarTitleDisplayMode(.inline)
         }) {
             VStack(alignment: .leading ){
-                Text(memory.name)
-                Text(memory.description)
+                Text(memory.memoryName ?? "No Name")
+                Text(memory.memoryDescription ?? "No Description")
                     .font(.caption)
             }
         }
@@ -37,6 +43,14 @@ struct MemoriesListView: View {
             List {
                 ForEach(Array(memories)) { memory in
                     cell(for: memory)
+                        .swipeActions {
+                            Button {
+                                PersistenceController.delete(item: memory, withContext: managedObjectContext)
+                            } label: {
+                                Image(systemName: "trash")
+                                    .symbolVariant(.fill)
+                            }.tint(.red)
+                        }
                 }
             }
         }
@@ -46,25 +60,16 @@ struct MemoriesListView: View {
         NavigationView {
             memoryListView()
                 .navigationTitle("Memories")
-
                 .toolbar {
                     Button(action: {
                         presentingModal.toggle()
-                        print("Button Pressed")
                     }) {
                         Image(systemName: "plus")
                     }
                 }
         }.popover(isPresented: $presentingModal) {
-            MemoryCreationView(memories: $memories)
+            MemoryCreationView()
         }
-        #if DEBUG
-        .onAppear {
-            Memory.createSampleMemory { memory in
-                self.memories.insert(memory)
-            }
-        }
-        #endif
     }
 }
 

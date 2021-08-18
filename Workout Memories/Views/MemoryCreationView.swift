@@ -16,20 +16,28 @@ struct MemoryCreationView : View {
     @State private var addWorkoutsPresented = false
     @StateObject private var workoutManager = WorkoutManager()
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
+    @State private var selectedWorkouts = Set<HKWorkout>()
 
     // MARK: Public State
-    @State private var selectedWorkouts = Set<HKWorkout>()
-    var memories: Binding<Set<Memory>>?
+    @State var memory: Memory?
 
     private func saveButtonPressed() {
-        if let memories = memories {
-            memories.wrappedValue.insert(Memory(
-                name: memoryName,
-                description: memoryDescription,
-                workouts: selectedWorkouts
-            )
-            )
+        do {
+            guard let memory = memory else { return }
+            memory.memoryDescription = memoryDescription
+            memory.memoryName = memoryName
+            memory.workouts = selectedWorkouts
+            try viewContext.save()
+            dismiss()
+        } catch {
+            print("Unable to save memory")
+            print(error.localizedDescription)
         }
+    }
+
+    private func cancelButtonPressed() {
+        viewContext.rollback()
         dismiss()
     }
 
@@ -89,10 +97,19 @@ struct MemoryCreationView : View {
                 WorkoutListView(commitedWorkouts: $selectedWorkouts, isPresenting: $addWorkoutsPresented, workoutManager: workoutManager)
             }
             .navigationTitle("Create Memory")
+            .onAppear {
+                if let memory = memory {
+                    memoryName = memory.memoryName!
+                    memoryDescription = memory.memoryDescription!
+                    selectedWorkouts = Set(memory.workouts ?? [])
+                } else {
+                    memory = Memory(context: viewContext)
+                }
+            }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     Button(action: {
-                        dismiss()
+                        cancelButtonPressed()
                     }) {
                         Text("Cancel")
                     }
@@ -106,7 +123,7 @@ struct MemoryCreationView : View {
                     }
                 }
             }
-        }}
+        }.interactiveDismissDisabled(true)}
 }
 
 struct MemoryCreationView_Preview: PreviewProvider {

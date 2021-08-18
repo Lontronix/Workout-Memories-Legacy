@@ -41,12 +41,12 @@ struct MemoryView: View {
         VStack {
             MapView(lineCoordinates: locations)
             VStack(alignment: .leading) {
-                Text(memory?.description ?? "Sample Description")
+                Text(memory?.memoryDescription ?? "Sample Description")
                 Text("Total Distance Traveled: \(calculateMemoryDistance())")
                 Text("Total Time: \(calculateMemoryDuration())")
                 List {
                     if let memory = memory {
-                        ForEach(Array(memory.workouts), id: \.uuid) { workout in
+                        ForEach(Array(memory.workouts ?? []), id: \.uuid) { workout in
                             WorkoutCell(
                                 startDate: workout.startDate,
                                 endDate: workout.endDate,
@@ -67,7 +67,7 @@ struct MemoryView: View {
             }.padding()
         }.onAppear {
             Task {
-                self.locations = await WorkoutManager.fetchRouteData(for: Array(memory!.workouts))
+                self.locations = await WorkoutManager.fetchRouteData(for: Array(memory!.workouts ?? []))
             }
         }
     }

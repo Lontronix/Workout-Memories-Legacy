@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5304g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Memory" representedClassName=".Memory" syncable="YES">
+        <attribute name="memoryDescription" attributeType="String"/>
+        <attribute name="memoryID" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="memoryName" attributeType="String"/>
+        <relationship name="workoutIDs" toMany="YES" deletionRule="Nullify" destinationEntity="Workout" inverseName="memory" inverseEntity="Workout"/>
+    </entity>
+    <entity name="Workout" representedClassName=".Workout" syncable="YES" codeGenerationType="category">
+        <attribute name="workoutID" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="memory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Memory" inverseName="workoutIDs" inverseEntity="Memory"/>
+    </entity>
+    <elements>
+        <element name="Memory" positionX="264.0390625" positionY="-74.36328125" width="128" height="89"/>
+        <element name="Workout" positionX="82.3203125" positionY="-72.265625" width="128" height="59"/>
+    </elements>
+</model>
